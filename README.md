@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Content / UG26FA Digital Systems (EE-4322-01)</title>
-    <!-- Blackboard Gold/Black Icon Data URI -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23262626'/%3E%3Cpath d='M8 7h7v8H8zm9 0h7v8h-7zm0 10h7v8h-7zm-9 0h7v8H8z' fill='%23C56FD5'/%3E%3C/svg%3E">
+    <!-- Official Blackboard Ultra Gold/Plum Course Silhouette Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231E1E1E'/%3E%3Cpath d='M8 7h7v8H8zm9 0h7v8h-7zm0 10h7v8h-7zm-9 0h7v8H8z' fill='%23C56FD5'/%3E%3C/svg%3E">
 
     <style>
         * {
@@ -23,7 +23,7 @@
         }
 
         /* ========================================================
-           BACKGROUND CANVAS: INTERACTIVE BLACKBOARD ULTRA SYSTEM
+           FULL-WIDTH BACKGROUND: BLACKBOARD ULTRA WORKSPACE
            ======================================================== */
         #pageBackground {
             position: absolute;
@@ -36,82 +36,87 @@
             z-index: 1;
         }
 
-        /* 1. Ultra App Bar */
+        /* 1. Ultra Top Header Bar */
         .bb-app-bar {
-            background-color: #262626;
+            background-color: #212121;
             color: #FFFFFF;
-            height: 44px;
+            height: 48px;
             display: flex;
             align-items: center;
-            padding: 0 16px;
-            gap: 12px;
-            font-size: 13.5px;
+            padding: 0 24px;
+            gap: 16px;
+            font-size: 14px;
             border-bottom: 1px solid #333333;
         }
 
-        .bb-home-box {
+        .bb-home-btn {
             background-color: #383838;
             border-radius: 4px;
-            width: 28px;
-            height: 26px;
+            width: 30px;
+            height: 30px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
+            text-decoration: none;
         }
 
-        .bb-home-box svg {
-            width: 15px;
-            height: 15px;
+        .bb-home-btn svg {
+            width: 17px;
+            height: 17px;
             fill: #FFFFFF;
         }
 
         .bb-course-switch-btn {
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 6px;
             cursor: pointer;
-            font-size: 13px;
+            font-size: 14.5px;
             font-weight: 600;
+            color: #FFFFFF;
         }
 
         .bb-pipe-separator {
             width: 1px;
-            height: 16px;
+            height: 18px;
             background-color: #4A4A4A;
         }
 
         .bb-course-name-top {
-            font-size: 13px;
+            font-size: 14.5px;
             color: #FFFFFF;
-            font-weight: 500;
+            font-weight: 600;
+            letter-spacing: -0.1px;
         }
 
         .bb-status-pill {
             margin-left: auto;
             background-color: #C56FD5;
-            color: #262626;
-            font-size: 10px;
+            color: #1A1A1A;
+            font-size: 11px;
             font-weight: 800;
             letter-spacing: 0.5px;
             text-transform: uppercase;
-            padding: 2px 10px;
+            padding: 2.5px 12px;
             border-radius: 12px;
         }
 
-        /* 2. Course Tools Tab Strip */
+        /* 2. Ribbon Navigation Tabs */
         .bb-tools-nav {
-            background-color: #262626;
+            background-color: #212121;
             display: flex;
             padding: 0 24px;
             border-bottom: 1px solid #4D4D4D;
             overflow-x: auto;
+            align-items: center;
         }
 
         .bb-tool-item {
-            color: #D1D1D1;
-            font-size: 13.5px;
-            padding: 10px 14px;
+            color: #CDCDCD;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 12px 14px 10px 14px;
             text-decoration: none;
             cursor: pointer;
             display: inline-flex;
@@ -132,23 +137,28 @@
         }
 
         .bb-counter-badge {
-            background-color: #C56FD5;
-            color: #262626;
-            font-size: 10px;
-            padding: 0 6px;
-            border-radius: 10px;
+            background-color: #B666C7;
+            color: #1B1B1B;
+            font-size: 11px;
+            line-height: 1;
+            width: 17px;
+            height: 17px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             font-weight: 800;
         }
 
-        /* 3. Deep Plum/Purple Banner */
+        /* 3. Desaturated Plum Wave Banner */
         .bb-hero-banner {
             position: relative;
-            background: linear-gradient(135deg, #26162C 0%, #3F1F4D 50%, #201326 100%);
-            height: 195px;
+            background: linear-gradient(90deg, #1A131E 0%, #29182E 40%, #1F1523 100%);
+            height: 220px;
             overflow: hidden;
             display: flex;
             align-items: flex-end;
-            padding: 0 32px 28px 32px;
+            padding: 0 48px 34px 48px;
         }
 
         .bb-banner-curves {
@@ -158,7 +168,6 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
-            opacity: 0.85;
         }
 
         .bb-hero-title {
@@ -166,18 +175,17 @@
             z-index: 2;
             color: #FFFFFF;
             margin: 0;
-            font-size: 22px;
+            font-size: 26px;
             font-weight: 600;
             letter-spacing: -0.2px;
         }
 
-        /* 4. Main Body Split */
+        /* 4. Fluid Edge-to-Edge Grid Container */
         .bb-main-grid {
             display: flex;
-            max-width: 1480px;
-            margin: 0 auto;
-            padding: 24px 32px;
-            gap: 28px;
+            width: 100%;
+            padding: 28px 48px;
+            gap: 36px;
             align-items: flex-start;
         }
 
@@ -187,19 +195,19 @@
         }
 
         .bb-sidebar-section {
-            width: 300px;
+            width: 320px;
             flex-shrink: 0;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 24px;
         }
 
-        /* 5. Course Content Area */
+        /* 5. Course Content Column */
         .bb-section-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
         }
 
         .bb-section-header h2 {
@@ -213,7 +221,7 @@
             background: none;
             border: none;
             cursor: pointer;
-            padding: 4px;
+            padding: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -225,12 +233,12 @@
             background: #E5E5E5;
         }
 
-        /* 6. Expandable Accordion Folders */
+        /* Expandable Accordion Folders */
         .bb-accordion-card {
             background: #FFFFFF;
             border: 1px solid #E5E5E5;
             border-radius: 4px;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.04);
             overflow: hidden;
             transition: border-color 0.15s ease;
@@ -241,7 +249,7 @@
         }
 
         .bb-card-header {
-            padding: 14px 18px;
+            padding: 16px 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -257,18 +265,21 @@
         .bb-card-title-group {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 16px;
         }
 
         .bb-folder-icon {
-            width: 20px;
-            height: 20px;
-            fill: #707070;
+            width: 22px;
+            height: 22px;
+            fill: none;
+            stroke: #333333;
+            stroke-width: 1.8;
+            stroke-linejoin: round;
             flex-shrink: 0;
         }
 
         .bb-folder-label {
-            font-size: 14.5px;
+            font-size: 15px;
             font-weight: 600;
             color: #262626;
         }
@@ -278,9 +289,13 @@
         }
 
         .bb-chevron-icon {
-            width: 14px;
-            height: 14px;
-            fill: #666666;
+            width: 16px;
+            height: 16px;
+            fill: none;
+            stroke: #444444;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
             transition: transform 0.2s ease;
         }
 
@@ -288,10 +303,10 @@
             transform: rotate(180deg);
         }
 
-        /* Nested Folder Contents */
+        /* Folder Sub-drawer */
         .bb-folder-drawer {
             display: none;
-            padding: 4px 18px 14px 52px;
+            padding: 4px 20px 16px 58px;
             background: #FFFFFF;
             border-top: 1px solid #F0F0F0;
         }
@@ -303,11 +318,11 @@
         .bb-subitem-row {
             display: flex;
             align-items: center;
-            gap: 10px;
-            padding: 9px 0;
+            gap: 12px;
+            padding: 11px 0;
             border-bottom: 1px solid #F4F4F4;
             color: #262626;
-            font-size: 13.5px;
+            font-size: 14px;
             cursor: pointer;
         }
 
@@ -321,23 +336,25 @@
         }
 
         .bb-subitem-icon {
-            width: 16px;
-            height: 16px;
-            fill: #666666;
+            width: 18px;
+            height: 18px;
+            fill: none;
+            stroke: #4A5568;
+            stroke-width: 1.6;
             flex-shrink: 0;
         }
 
-        /* 7. Sidebar Widgets */
+        /* 6. Sidebar Panels */
         .bb-card-panel {
             background: #FFFFFF;
             border: 1px solid #E5E5E5;
             border-radius: 4px;
-            padding: 16px;
+            padding: 18px 20px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.03);
         }
 
         .bb-card-panel h3 {
-            margin: 0 0 14px 0;
+            margin: 0 0 16px 0;
             font-size: 15px;
             font-weight: 700;
             color: #262626;
@@ -346,15 +363,14 @@
         .bb-faculty-profile {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 14px;
         }
 
         .bb-faculty-avatar {
-            width: 44px;
-            height: 44px;
+            width: 46px;
+            height: 46px;
             border-radius: 50%;
-            background: #475569;
-            overflow: hidden;
+            background: #2D3748;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -372,7 +388,7 @@
         }
 
         .bb-faculty-name {
-            font-size: 14px;
+            font-size: 14.5px;
             font-weight: 700;
             color: #262626;
             margin: 0;
@@ -383,14 +399,14 @@
 
         .bb-faculty-badge {
             display: inline-block;
-            background: #F0F0F0;
-            color: #555555;
+            background: #EFEFEF;
+            color: #4A4A4A;
             font-size: 10px;
-            font-weight: 700;
-            padding: 1px 7px;
+            font-weight: 800;
+            padding: 2px 8px;
             border-radius: 2px;
             text-transform: uppercase;
-            margin-top: 2px;
+            margin-top: 3px;
         }
 
         .bb-envelope-btn {
@@ -398,7 +414,7 @@
             border: none;
             cursor: pointer;
             padding: 6px;
-            color: #333333;
+            color: #262626;
             border-radius: 4px;
             display: flex;
             align-items: center;
@@ -410,8 +426,8 @@
         }
 
         .bb-envelope-btn svg {
-            width: 18px;
-            height: 18px;
+            width: 19px;
+            height: 19px;
             fill: currentColor;
         }
 
@@ -424,9 +440,9 @@
         .bb-action-entry {
             display: flex;
             align-items: flex-start;
-            gap: 12px;
-            padding: 10px 0;
-            border-bottom: 1px solid #EFEFEF;
+            gap: 14px;
+            padding: 12px 0;
+            border-bottom: 1px solid #F0F0F0;
             cursor: pointer;
         }
 
@@ -435,62 +451,62 @@
         }
 
         .bb-action-entry svg {
-            width: 17px;
-            height: 17px;
+            width: 18px;
+            height: 18px;
             margin-top: 2px;
             flex-shrink: 0;
         }
 
         .bb-action-heading {
-            font-size: 13.5px;
+            font-size: 14px;
             font-weight: 700;
             color: #262626;
             margin: 0 0 2px 0;
         }
 
         .bb-action-sublink {
-            font-size: 12px;
+            font-size: 12.5px;
             color: #2073A1;
             margin: 0;
             text-decoration: underline;
         }
 
-        /* Fixed Floating Question Mark Help Beacon */
+        /* Fixed Question Mark Beacon */
         .bb-floating-help {
             position: fixed;
-            bottom: 16px;
-            right: 18px;
-            width: 32px;
-            height: 32px;
+            bottom: 20px;
+            right: 24px;
+            width: 34px;
+            height: 34px;
             background: #FFFFFF;
             border: 1px solid #CDCDCD;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.18);
             cursor: pointer;
             z-index: 100;
         }
 
         .bb-floating-help svg {
-            width: 18px;
-            height: 18px;
-            fill: #444444;
+            width: 19px;
+            height: 19px;
+            fill: #333333;
         }
 
         /* ========================================================
-           NOTEPAD++ FLOATING APPLICATION COMPONENT WINDOW
+           NOTEPAD++ FLOATING APPLICATION WINDOW
            ======================================================== */
         .npp-window {
             position: absolute;
-            top: 70px;
-            left: 110px;
-            width: 870px;
-            height: 570px;
+            top: 75px;
+            left: 120px;
+            width: 880px;
+            height: 580px;
             background-color: #FFFFFF;
             border: 1px solid #707070;
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+            box-shadow: 0 16px 42px rgba(0, 0, 0, 0.45);
             display: flex;
             flex-direction: column;
             border-radius: 3px;
@@ -788,9 +804,9 @@
          INTERACTIVE BLACKBOARD BACKGROUND
          ======================================================== -->
     <div id="pageBackground">
-        <!-- Ultra Top App Bar -->
+        <!-- Top App Bar -->
         <header class="bb-app-bar">
-            <div class="bb-home-box" title="Institutional Home">
+            <div class="bb-home-btn" title="Institutional Home">
                 <svg viewBox="0 0 16 16"><path d="M15.46 14.46c0 .85-.69 1.54-1.54 1.54H10.15c-.55 0-1-.45-1-1v-4.31a.08.08 0 0 0-.08-.08H6.92a.08.08 0 0 0-.08.08V15c0 .55-.45 1-1 1H2.08c-.85 0-1.54-.69-1.54-1.54V6.38c0-.3.13-.58.36-.77L7.36.23l.07-.05a1 1 0 0 1 1.21.05l6.46 5.39c.23.19.36.47.36.76zM11.15 14h2.31V6.85L8 2.3 2.54 6.85V14h2.31v-3.31c0-1.15.93-2.08 2.08-2.08h2.15c1.15 0 2.08.93 2.08 2.08z"/></svg>
             </div>
             <div class="bb-course-switch-btn">
@@ -802,7 +818,7 @@
             <span class="bb-status-pill">OPEN</span>
         </header>
 
-        <!-- Tool Navigation Bar -->
+        <!-- Navigation Tabs Ribbon -->
         <nav class="bb-tools-nav">
             <a class="bb-tool-item active">Content</a>
             <a class="bb-tool-item">Calendar</a>
@@ -814,68 +830,68 @@
             <a class="bb-tool-item">Achievements</a>
         </nav>
 
-        <!-- Blackboard Plum/Purple Curve Course Banner -->
+        <!-- Blackboard Hero Plum Banner with Muted Dark Gradient Curves -->
         <div class="bb-hero-banner">
             <svg class="bb-banner-curves" viewBox="0 0 1440 220" preserveAspectRatio="none">
-                <path d="M0,0 C380,120 720,20 1100,140 C1250,185 1380,160 1440,110 L1440,220 L0,220 Z" fill="rgba(88, 36, 108, 0.45)"/>
-                <path d="M0,40 C420,180 840,40 1200,180 C1320,220 1400,210 1440,180 L1440,220 L0,220 Z" fill="rgba(61, 23, 77, 0.6)"/>
-                <path d="M600,0 C850,140 1150,60 1440,120 L1440,0 Z" fill="rgba(197, 111, 213, 0.12)"/>
+                <path d="M0,0 C380,110 760,20 1140,130 C1280,170 1380,150 1440,110 L1440,220 L0,220 Z" fill="rgba(61, 35, 71, 0.45)"/>
+                <path d="M0,45 C440,165 820,35 1200,165 C1320,205 1400,195 1440,170 L1440,220 L0,220 Z" fill="rgba(42, 23, 51, 0.7)"/>
+                <path d="M550,0 C800,120 1120,50 1440,105 L1440,0 Z" fill="rgba(182, 102, 199, 0.08)"/>
             </svg>
             <h1 class="bb-hero-title">UG26FA Digital Systems (EE-4322-01)</h1>
         </div>
 
-        <!-- Course Body Layout -->
+        <!-- Full-Width Page Layout -->
         <div class="bb-main-grid">
-            <!-- Left: Interactive Content Folders -->
+            <!-- Left: Interactive Content Outline -->
             <main class="bb-content-section">
                 <div class="bb-section-header">
                     <h2>Course Content</h2>
                     <button class="bb-search-btn" title="Search course content">
-                        <svg viewBox="0 0 16 16" style="width:17px; height:17px; fill:#262626;"><path fill-rule="evenodd" d="M6.5 0C2.91 0 0 2.91 0 6.5S2.91 13 6.5 13c1.43 0 2.76-.46 3.83-1.25l3.96 3.96c.39.39 1.02.39 1.41 0s.39-1.02 0-1.41l-3.96-3.96C12.54 9.26 13 7.93 13 6.5 13 2.91 10.09 0 6.5 0M2 6.5C2 4.01 4.01 2 6.5 2S11 4.01 11 6.5 8.99 11 6.5 11 2 8.99 2 6.5" clip-rule="evenodd"/></svg>
+                        <svg viewBox="0 0 16 16" style="width:18px; height:18px; fill:#262626;"><path fill-rule="evenodd" d="M6.5 0C2.91 0 0 2.91 0 6.5S2.91 13 6.5 13c1.43 0 2.76-.46 3.83-1.25l3.96 3.96c.39.39 1.02.39 1.41 0s.39-1.02 0-1.41l-3.96-3.96C12.54 9.26 13 7.93 13 6.5 13 2.91 10.09 0 6.5 0M2 6.5C2 4.01 4.01 2 6.5 2S11 4.01 11 6.5 8.99 11 6.5 11 2 8.99 2 6.5" clip-rule="evenodd"/></svg>
                     </button>
                 </div>
 
                 <!-- Folder 1: Syllabus -->
-                <div class="bb-accordion-card" id="folder1">
+                <div class="bb-accordion-card open" id="folder1">
                     <div class="bb-card-header" onclick="toggleFolder('folder1')">
                         <div class="bb-card-title-group">
-                            <svg class="bb-folder-icon" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M2 3c0-.55.45-1 1-1h8.44a1 1 0 0 1 .92.62l.87 2.1H21c.55 0 1 .45 1 1V21c0 .55-.45 1-1 1H3c-.55 0-1-.45-1-1zm2 1v16h16V6.71h-7.44a1 1 0 0 1-.92-.61L10.77 4zm.69 1.71c0-.55.45-1 1-1h3.62c.55 0 1 .45 1 1s-.45 1-1 1H4.69c-.55 0-1-.45-1-1" clip-rule="evenodd"/></svg>
+                            <svg class="bb-folder-icon" viewBox="0 0 24 24"><path d="M3 5h6l2 2h10v12H3V5z"/></svg>
                             <span class="bb-folder-label">Syllabus & Course Information</span>
                         </div>
-                        <svg class="bb-chevron-icon" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M.29 3.29c.39-.39 1.02-.39 1.41 0L8 9.59l6.29-6.3c.39-.39 1.02-.39 1.41 0 .39.4.39 1.03 0 1.42l-7 7c-.39.39-1.02.39-1.41 0l-7-7c-.39-.39-.39-1.02 0-1.42" clip-rule="evenodd"/></svg>
+                        <svg class="bb-chevron-icon" viewBox="0 0 16 16"><path d="M3 6l5 5 5-5"/></svg>
                     </div>
                     <div class="bb-folder-drawer">
                         <div class="bb-subitem-row">
-                            <svg class="bb-subitem-icon" viewBox="0 0 16 16"><path d="M3 1h7l3 3v11H3V1z" fill="none" stroke="#666" stroke-width="1.5"/><path d="M10 1v3h3" fill="none" stroke="#666" stroke-width="1.5"/></svg>
+                            <svg class="bb-subitem-icon" viewBox="0 0 16 16"><path d="M3 1h7l3 3v11H3V1z"/><path d="M10 1v3h3"/></svg>
                             <span>EE-4322 Syllabus - Fall Semester.pdf</span>
                         </div>
                         <div class="bb-subitem-row">
-                            <svg class="bb-subitem-icon" viewBox="0 0 16 16"><path d="M8 2a6 6 0 1 0 0 12A6 6 0 0 0 8 2zm-.8 3.5h1.6v1.6H7.2V5.5zm0 3.2h1.6v4.8H7.2V8.7z" fill="#666"/></svg>
+                            <svg class="bb-subitem-icon" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7"/><path d="M8 5v1M8 8v4" stroke-linecap="round"/></svg>
                             <span>Course Overview, Office Hours & Grading Criteria</span>
                         </div>
                     </div>
                 </div>
 
                 <!-- Folder 2: Projects, Homeworks, & Labs -->
-                <div class="bb-accordion-card" id="folder2">
+                <div class="bb-accordion-card open" id="folder2">
                     <div class="bb-card-header" onclick="toggleFolder('folder2')">
                         <div class="bb-card-title-group">
-                            <svg class="bb-folder-icon" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M2 3c0-.55.45-1 1-1h8.44a1 1 0 0 1 .92.62l.87 2.1H21c.55 0 1 .45 1 1V21c0 .55-.45 1-1 1H3c-.55 0-1-.45-1-1zm2 1v16h16V6.71h-7.44a1 1 0 0 1-.92-.61L10.77 4zm.69 1.71c0-.55.45-1 1-1h3.62c.55 0 1 .45 1 1s-.45 1-1 1H4.69c-.55 0-1-.45-1-1" clip-rule="evenodd"/></svg>
+                            <svg class="bb-folder-icon" viewBox="0 0 24 24"><path d="M3 5h6l2 2h10v12H3V5z"/></svg>
                             <span class="bb-folder-label">Projects, Homeworks, & Labs</span>
                         </div>
-                        <svg class="bb-chevron-icon" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M.29 3.29c.39-.39 1.02-.39 1.41 0L8 9.59l6.29-6.3c.39-.39 1.02-.39 1.41 0 .39.4.39 1.03 0 1.42l-7 7c-.39.39-1.02.39-1.41 0l-7-7c-.39-.39-.39-1.02 0-1.42" clip-rule="evenodd"/></svg>
+                        <svg class="bb-chevron-icon" viewBox="0 0 16 16"><path d="M3 6l5 5 5-5"/></svg>
                     </div>
                     <div class="bb-folder-drawer">
                         <div class="bb-subitem-row">
-                            <svg class="bb-subitem-icon" viewBox="0 0 16 16"><path d="M2 2h9l3 3v9H2V2z" fill="none" stroke="#666" stroke-width="1.5"/><path d="M5 8h6M5 11h4" stroke="#666" stroke-width="1.5"/></svg>
+                            <svg class="bb-subitem-icon" viewBox="0 0 16 16"><path d="M2 2h9l3 3v9H2V2z"/><path d="M5 8h6M5 11h4"/></svg>
                             <span>Lab 1: HDL Synthesis & FPGA Development Board Setup</span>
                         </div>
                         <div class="bb-subitem-row">
-                            <svg class="bb-subitem-icon" viewBox="0 0 16 16"><path d="M2 2h9l3 3v9H2V2z" fill="none" stroke="#666" stroke-width="1.5"/><path d="M5 8h6M5 11h4" stroke="#666" stroke-width="1.5"/></svg>
+                            <svg class="bb-subitem-icon" viewBox="0 0 16 16"><path d="M2 2h9l3 3v9H2V2z"/><path d="M5 8h6M5 11h4"/></svg>
                             <span>Lab 2: Finite State Machine (FSM) Sequential Circuits</span>
                         </div>
                         <div class="bb-subitem-row">
-                            <svg class="bb-subitem-icon" viewBox="0 0 16 16"><path d="M4 1h8v14H4z" fill="none" stroke="#666" stroke-width="1.5"/><path d="M6 4h4M6 7h4M6 10h2" stroke="#666" stroke-width="1.5"/></svg>
+                            <svg class="bb-subitem-icon" viewBox="0 0 16 16"><path d="M4 1h8v14H4z"/><path d="M6 4h4M6 7h4M6 10h2"/></svg>
                             <span>Homework Assignment 3 - Logic Minimization</span>
                         </div>
                     </div>
@@ -885,34 +901,33 @@
                 <div class="bb-accordion-card" id="folder3">
                     <div class="bb-card-header" onclick="toggleFolder('folder3')">
                         <div class="bb-card-title-group">
-                            <svg class="bb-folder-icon" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M2 3c0-.55.45-1 1-1h8.44a1 1 0 0 1 .92.62l.87 2.1H21c.55 0 1 .45 1 1V21c0 .55-.45 1-1 1H3c-.55 0-1-.45-1-1zm2 1v16h16V6.71h-7.44a1 1 0 0 1-.92-.61L10.77 4zm.69 1.71c0-.55.45-1 1-1h3.62c.55 0 1 .45 1 1s-.45 1-1 1H4.69c-.55 0-1-.45-1-1" clip-rule="evenodd"/></svg>
+                            <svg class="bb-folder-icon" viewBox="0 0 24 24"><path d="M3 5h6l2 2h10v12H3V5z"/></svg>
                             <span class="bb-folder-label">Lecture Materials</span>
                         </div>
-                        <svg class="bb-chevron-icon" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M.29 3.29c.39-.39 1.02-.39 1.41 0L8 9.59l6.29-6.3c.39-.39 1.02-.39 1.41 0 .39.4.39 1.03 0 1.42l-7 7c-.39.39-1.02.39-1.41 0l-7-7c-.39-.39-.39-1.02 0-1.42" clip-rule="evenodd"/></svg>
+                        <svg class="bb-chevron-icon" viewBox="0 0 16 16"><path d="M3 6l5 5 5-5"/></svg>
                     </div>
                     <div class="bb-folder-drawer">
                         <div class="bb-subitem-row">
-                            <svg class="bb-subitem-icon" viewBox="0 0 16 16"><path d="M1 3h14v10H1z" fill="none" stroke="#666" stroke-width="1.5"/><path d="M4 7l3 2-3 2V7z" fill="#666"/></svg>
+                            <svg class="bb-subitem-icon" viewBox="0 0 16 16"><path d="M1 3h14v10H1z"/><path d="M4 7l3 2-3 2V7z" fill="#4A5568"/></svg>
                             <span>Lecture 01 - Intro to Synchronous Logic.pptx</span>
                         </div>
                         <div class="bb-subitem-row">
-                            <svg class="bb-subitem-icon" viewBox="0 0 16 16"><path d="M1 3h14v10H1z" fill="none" stroke="#666" stroke-width="1.5"/><path d="M4 7l3 2-3 2V7z" fill="#666"/></svg>
+                            <svg class="bb-subitem-icon" viewBox="0 0 16 16"><path d="M1 3h14v10H1z"/><path d="M4 7l3 2-3 2V7z" fill="#4A5568"/></svg>
                             <span>Lecture 02 - Timing Constraints & Setup/Hold Times.pptx</span>
                         </div>
                     </div>
                 </div>
             </main>
 
-            <!-- Right: Details, Actions & Faculty Panel -->
+            <!-- Right: Details & Faculty Side Column -->
             <aside class="bb-sidebar-section">
-                <!-- Faculty -->
+                <!-- Faculty Widget -->
                 <div class="bb-card-panel">
                     <h3>Course Faculty</h3>
                     <div class="bb-faculty-profile">
                         <div class="bb-faculty-avatar">
-                            <!-- Real silhouette avatar -->
                             <svg viewBox="0 0 32 32">
-                                <circle cx="16" cy="16" r="16" fill="#4A5568"/>
+                                <circle cx="16" cy="16" r="16" fill="#3D4A5C"/>
                                 <path d="M16 8a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm-8 18c0-4 4-6 8-6s8 2 8 6v1H8v-1z" fill="#CBD5E0"/>
                             </svg>
                         </div>
@@ -926,7 +941,7 @@
                     </div>
                 </div>
 
-                <!-- Details & Actions -->
+                <!-- Details & Actions Widget -->
                 <div class="bb-card-panel">
                     <h3>Details & Actions</h3>
                     <ul class="bb-actions-list">
@@ -963,7 +978,7 @@
             </aside>
         </div>
 
-        <!-- Floating Question Mark Helper -->
+        <!-- Help Button -->
         <div class="bb-floating-help" title="Help">
             <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
         </div>
@@ -984,7 +999,7 @@
             </div>
         </div>
         
-        <!-- Menu Bar -->
+        <!-- Menu -->
         <div class="npp-menubar">
             <div class="menu-item">File
                 <div class="dropdown-content">
@@ -1042,7 +1057,7 @@
             </div>
         </div>
 
-        <!-- Notepad++ Tab Strip -->
+        <!-- Tab Strip -->
         <div class="npp-tabs-bar">
             <div class="tab-list" id="tabList"></div>
             <button class="tab-add-btn" title="New file" onclick="createNewTab()">+</button>
@@ -1070,7 +1085,6 @@
 
     <!-- Background and Window Management Logic -->
     <script>
-        // --- 1. Blackboard Ultra Folder Accordion Engine ---
         function toggleFolder(folderId) {
             const card = document.getElementById(folderId);
             if (card) {
@@ -1078,7 +1092,7 @@
             }
         }
 
-        // --- 2. Notepad++ Document Buffer & Tab Model ---
+        // Notepad++ Document Buffer & Tab Model
         let tabs = [
             {
                 id: 1,
@@ -1183,7 +1197,6 @@
             closeTabById(activeTabId);
         }
 
-        // Dynamic Line Number sync
         function syncEditor() {
             const text = editor.value;
             const currentTab = getCurrentTab();
@@ -1305,7 +1318,7 @@
             }
         }
 
-        // Window dragging & resizing engine
+        // Window drag & resize engine
         const header = document.getElementById('windowDragHeader');
         const rHandle = document.getElementById('resizableHandle');
         let isDragging = false, isResizing = false;
@@ -1367,7 +1380,6 @@
             win.style.display = 'none';
         }
 
-        // Boot
         const initial = getCurrentTab();
         editor.value = initial ? initial.content : '';
         renderTabs();
