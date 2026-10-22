@@ -3,19 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Notepad++ Web Framework</title>
+    <title>Notepad++ - Standard Web Interface</title>
     <style>
-        /* Classic Windows Desktop Accent Canvas Background */
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
-            background-color: #55769A; 
+            background-color: #55769A;
             margin: 0;
             padding: 0;
             height: 100vh;
             overflow: hidden;
         }
 
-        /* Resizable Windows Sub-Frame */
         .npp-window {
             position: absolute;
             top: 40px;
@@ -27,13 +25,13 @@
             box-shadow: 0 8px 24px rgba(0,0,0,0.3);
             display: flex;
             flex-direction: column;
-            border-radius: 4px;
+            border-radius: 3px;
             overflow: hidden;
             min-width: 450px;
             min-height: 300px;
+            box-sizing: border-box;
         }
 
-        /* Fullscreen Maximize State Modifier */
         .npp-window.maximized {
             top: 0 !important;
             left: 0 !important;
@@ -43,7 +41,6 @@
             border-radius: 0;
         }
 
-        /* App Title Drag bar tracking track */
         .npp-titlebar {
             background-color: #FFFFFF;
             color: #000000;
@@ -54,11 +51,22 @@
             font-size: 12px;
             cursor: move;
             user-select: none;
+            border-bottom: 1px solid #F0F0F0;
         }
-        .npp-controls { display: flex; gap: 14px; font-size: 11px; padding-right: 4px; }
-        .npp-controls span { cursor: pointer; }
 
-        /* Classic Menu Options Links Row */
+        .npp-controls {
+            display: flex;
+            gap: 14px;
+            font-size: 11px;
+            padding-right: 4px;
+        }
+
+        .npp-controls span {
+            cursor: pointer;
+            display: inline-block;
+            padding: 2px 4px;
+        }
+
         .npp-menubar {
             background-color: #F0F0F0;
             padding: 2px 6px;
@@ -68,25 +76,45 @@
             color: #000000;
             user-select: none;
         }
-        .menu-item { position: relative; cursor: pointer; padding: 1px 4px; }
-        .menu-item:hover { background-color: #E5E5E5; }
-        
-        /* Menu Action Dropdowns */
+
+        .menu-item {
+            position: relative;
+            cursor: pointer;
+            padding: 2px 4px;
+        }
+
+        .menu-item:hover {
+            background-color: #E5E5E5;
+        }
+
         .dropdown-content {
             display: none;
             position: absolute;
-            top: 100%; left: 0;
+            top: 100%;
+            left: 0;
             background-color: #F9F9F9;
             min-width: 140px;
             box-shadow: 0px 4px 8px rgba(0,0,0,0.15);
             border: 1px solid #CCCCCC;
-            z-index: 10;
+            z-index: 100;
         }
-        .dropdown-content div { padding: 6px 12px; font-size: 11.5px; color: #000000; text-align: left; }
-        .dropdown-content div:hover { background-color: #007ACC; color: white; }
-        .menu-item:hover .dropdown-content { display: block; }
 
-        /* Toolbar Icon Strip Elements */
+        .dropdown-content div {
+            padding: 6px 12px;
+            font-size: 11.5px;
+            color: #000000;
+            text-align: left;
+        }
+
+        .dropdown-content div:hover {
+            background-color: #007ACC;
+            color: white;
+        }
+
+        .menu-item:hover .dropdown-content {
+            display: block;
+        }
+
         .npp-toolbar {
             background-color: #F5F5F5;
             border-top: 1px solid #E0E0E0;
@@ -97,236 +125,369 @@
             user-select: none;
             align-items: center;
         }
-        .icon-group { display: flex; border-right: 1px solid #D0D0D0; padding-right: 6px; margin-right: 4px; gap: 5px; }
-        
+
+        .icon-group {
+            display: flex;
+            border-right: 1px solid #D0D0D0;
+            padding-right: 6px;
+            margin-right: 4px;
+            gap: 4px;
+            height: 22px;
+            align-items: center;
+        }
+
         .t-btn {
-            font-size: 13px; cursor: pointer; padding: 3px; border-radius: 2px;
-            display: flex; align-items: center; justify-content: center; width: 16px; height: 16px;
+            cursor: pointer;
+            padding: 3px;
+            border: 1px solid transparent;
+            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: none;
         }
-        .t-btn:hover { background-color: #DCDCDC; border: 1px solid #ABABAB; padding: 2px; }
 
-        /* Active Workspace File Header Tabs */
-        .npp-tabs { background-color: #F0F0F0; display: flex; padding-top: 3px; border-bottom: 1px solid #CCCCCC; }
+        .t-btn:hover {
+            background-color: #Edf2f7;
+            border: 1px solid #cbd5e0;
+        }
+
+        .t-btn svg {
+            width: 14px;
+            height: 14px;
+            display: block;
+        }
+
+        .npp-tabs {
+            background-color: #F0F0F0;
+            display: flex;
+            padding-top: 3px;
+            border-bottom: 1px solid #CCCCCC;
+        }
+
         .npp-tab {
-            background-color: #FFFFFF; color: #000000; padding: 4px 14px; font-size: 11.5px;
-            border-top: 3px solid #FF3B30; border-left: 1px solid #CCCCCC; border-right: 1px solid #CCCCCC;
-            border-radius: 2px 2px 0 0; display: flex; align-items: center; gap: 8px;
+            background-color: #FFFFFF;
+            color: #000000;
+            padding: 4px 14px;
+            font-size: 11.5px;
+            border-top: 3px solid #FF3B30;
+            border-left: 1px solid #CCCCCC;
+            border-right: 1px solid #CCCCCC;
+            border-radius: 2px 2px 0 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
-        /* Main Editor View Panels Layout grid */
-        .npp-editor-container { display: flex; flex: 1; overflow: hidden; position: relative; }
+        .npp-tab svg {
+            width: 11px;
+            height: 11px;
+        }
+
+        .npp-editor-container {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+            position: relative;
+        }
 
         .npp-linenumbers {
-            background-color: #ECE9D8; color: #555555; font-family: 'Consolas', monospace;
-            font-size: 13px; padding: 6px 5px; text-align: right; min-width: 32px; user-select: none;
-            border-right: 1px solid #A0A0A0; line-height: 1.5;
+            background-color: #ECE9D8;
+            color: #555555;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 13px;
+            padding: 6px 5px;
+            text-align: right;
+            min-width: 32px;
+            user-select: none;
+            border-right: 1px solid #A0A0A0;
+            line-height: 1.5;
+            white-space: pre;
         }
-        .npp-foldmargin { background-color: #F0F0F0; width: 14px; border-right: 1px solid #D0D0D0; }
+
+        .npp-foldmargin {
+            background-color: #F0F0F0;
+            width: 14px;
+            border-right: 1px solid #D0D0D0;
+        }
 
         .npp-textarea {
-            flex: 1; background-color: #FFFFFF; color: #000000; font-family: 'Consolas', monospace;
-            font-size: 13px; padding: 6px 8px; line-height: 1.5; outline: none;
-            overflow-y: auto; white-space: pre; word-wrap: normal;
+            flex: 1;
+            background-color: #FFFFFF;
+            color: #000000;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 13px;
+            padding: 6px 8px;
+            line-height: 1.5;
+            outline: none;
+            overflow-y: auto;
+            white-space: pre;
+            word-wrap: normal;
         }
 
-        /* Syntax Highlighter Colors Token Registry */
         .py-keyword { color: #0000FF; font-weight: bold; }
         .py-string { color: #804000; }
         .py-number { color: #FF0000; }
         .py-builtin { color: #000080; }
+        .py-comment { color: #008000; font-style: italic; }
 
-        /* Bottom Application Status Info Ribbon */
         .npp-statusbar {
-            background-color: #F0F0F0; color: #000000; padding: 3px 10px; font-size: 11.5px;
-            display: flex; justify-content: space-between; border-top: 1px solid #CCCCCC; user-select: none;
+            background-color: #F0F0F0;
+            color: #000000;
+            padding: 3px 10px;
+            font-size: 11.5px;
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid #CCCCCC;
+            user-select: none;
         }
-        .npp-status-right span { border-left: 1px solid #CCCCCC; padding: 0 12px; }
 
-        /* Window Corner Scale Active Handle Point Layout */
+        .npp-status-right span {
+            border-left: 1px solid #CCCCCC;
+            padding: 0 12px;
+        }
+
         .resize-handle {
-            position: absolute; width: 12px; height: 12px; right: 0; bottom: 0;
-            cursor: se-resize; z-index: 20; background: linear-gradient(135deg, transparent 4px, #999 4px);
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            right: 0;
+            bottom: 0;
+            cursor: se-resize;
+            z-index: 200;
+            background: linear-gradient(135deg, transparent 4px, #999 4px);
         }
     </style>
 </head>
 <body>
 
-    <!-- Hidden Native OS File Selection Anchor Pipe -->
-    <input type="file" id="fileLoader" style="display: none;" onchange="handleFileImport(event)">
+    <input type="file" id="fileLoader" style="position:absolute; width:1px; height:1px; opacity:0; z-index:-1;" onchange="handleFileImport(event)">
 
-    <!-- Main Workspace Container Interface Layout -->
     <div class="npp-window" id="windowContainer">
         
-        <!-- Application Title Bar Layout Line Header -->
         <div class="npp-titlebar" id="windowDragHeader">
-            <span id="windowTitle">*C:\Users\colemann\Documents\basic_test.py - Notepad++</span>
+            <span id="windowTitle">*C:\Users\Documents\basic_test.py - Notepad++</span>
             <div class="npp-controls">
-                <span>━</span><span onclick="toggleMaximize()">🗖</span><span onclick="alert('Close event simulation.')">✕</span>
+                <span onclick="alert('Minimize window')">━</span>
+                <span onclick="toggleMaximize(event)">🗖</span>
+                <span onclick="alert('Close window')">✕</span>
             </div>
         </div>
         
-        <!-- Nested Dropdown Navigation Options Matrix -->
         <div class="npp-menubar">
             <div class="menu-item">File
                 <div class="dropdown-content">
                     <div onclick="clearWorkspace()">New</div>
-                    <div onclick="triggerFileInput()">Open...</div>
+                    <div onclick="triggerFileInput(event)">Open...</div>
                     <div onclick="exportTextAsFile()">Save</div>
                 </div>
             </div>
-            <div class="menu-item">Edit</div><div class="menu-item">Search</div><div class="menu-item">View</div>
-            <div class="menu-item">Encoding</div><div class="menu-item">Language</div><div class="menu-item">Settings</div>
-            <div class="menu-item">Tools</div><div class="menu-item">Macro</div><div class="menu-item">Run</div>
+            <div class="menu-item">Edit</div>
+            <div class="menu-item">Search</div>
+            <div class="menu-item">View</div>
+            <div class="menu-item">Encoding</div>
+            <div class="menu-item">Language</div>
+            <div class="menu-item">Settings</div>
+            <div class="menu-item">Tools</div>
+            <div class="menu-item">Macro</div>
+            <div class="menu-item">Run</div>
         </div>
 
-        <!-- Custom Application Toolbar Button Strip Row -->
         <div class="npp-toolbar">
             <div class="icon-group">
-                <div class="t-btn" title="New file" onclick="clearWorkspace()">📄</div>
-                <div class="t-btn" title="Open file (Upload)" onclick="triggerFileInput()">📂</div>
-                <div class="t-btn" title="Save file (Download - Ctrl+S)" onclick="exportTextAsFile()">💾</div>
-                <div class="t-btn" title="Close document">❌</div>
+                <div class="t-btn" title="New file" onclick="clearWorkspace()">
+                    <svg viewBox="0 0 16 16" fill="none"><path d="M3 1h7l3 3v11H3V1z" stroke="#4A5568" stroke-width="1.5"/><path d="M10 1v3h3" stroke="#4A5568" stroke-width="1.5"/></svg>
+                </div>
+                <div class="t-btn" title="Open file" onclick="triggerFileInput(event)">
+                    <svg viewBox="0 0 16 16" fill="none"><path d="M1.5 3.5h4l1.5 1.5h7.5v8.5h-13V3.5z" stroke="#D69E2E" stroke-width="1.5" fill="#FEFCBF"/><path d="M1.5 6.5h13" stroke="#D69E2E" stroke-width="1.5"/></svg>
+                </div>
+                <div class="t-btn" title="Save file (Ctrl+S)" onclick="exportTextAsFile()">
+                    <svg viewBox="0 0 16 16" fill="none"><path d="M2 2h10l2 2v10H2V2z" fill="#3182CE" stroke="#2B6CB0"/><rect x="5" y="2" width="6" height="4" fill="#FFF"/><rect x="5" y="9" width="6" height="5" fill="#E2E8F0"/></svg>
+                </div>
+                <div class="t-btn" title="Close document" onclick="clearWorkspace()">
+                    <svg viewBox="0 0 16 16" fill="none"><path d="M3 3l10 10M13 3L3 13" stroke="#E53E3E" stroke-width="2"/></svg>
+                </div>
             </div>
             <div class="icon-group">
-                <div class="t-btn" title="Cut">✂️</div><div class="t-btn" title="Copy">📋</div><div class="t-btn" title="Undo">🔄</div><div class="t-btn" title="Search">🔍</div>
+                <div class="t-btn" title="Cut" onclick="document.execCommand('cut')">
+                    <svg viewBox="0 0 16 16" fill="none"><circle cx="4.5" cy="5.5" r="2" stroke="#4A5568" stroke-width="1.5"/><circle cx="4.5" cy="10.5" r="2" stroke="#4A5568" stroke-width="1.5"/><path d="M6.5 6.5l7 5.5M6.5 9.5l7-5.5" stroke="#4A5568" stroke-width="1.5"/></svg>
+                </div>
+                <div class="t-btn" title="Copy" onclick="document.execCommand('copy')">
+                    <svg viewBox="0 0 16 16" fill="none"><rect x="4" y="4" width="9" height="10" stroke="#4A5568" stroke-width="1.5" fill="#FFF"/><path d="M3 11H2V2h9v1" stroke="#4A5568" stroke-width="1.5"/></svg>
+                </div>
+                <div class="t-btn" title="Paste" onclick="navigator.clipboard.readText().then(t => document.execCommand('insertText', false, t))">
+                    <svg viewBox="0 0 16 16" fill="none"><rect x="3" y="4" width="10" height="11" stroke="#4A5568" stroke-width="1.5" fill="#FFF"/><rect x="5" y="1" width="6" height="4" fill="#CBD5E0" stroke="#718096"/></svg>
+                </div>
             </div>
             <div class="icon-group">
-                <div class="t-btn" title="Zoom In" onclick="adjustZoom(1)">➕</div>
-                <div class="t-btn" title="Zoom Out" onclick="adjustZoom(-1)">➖</div>
+                <div class="t-btn" title="Zoom in" onclick="adjustZoom(1)">
+                    <svg viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5" stroke="#4A5568" stroke-width="1.5"/><path d="M7 4.5v5M4.5 7h5M11 11l3.5 3.5" stroke="#4A5568" stroke-width="1.5"/></svg>
+                </div>
+                <div class="t-btn" title="Zoom out" onclick="adjustZoom(-1)">
+                    <svg viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5" stroke="#4A5568" stroke-width="1.5"/><path d="M4.5 7h5M11 11l3.5 3.5" stroke="#4A5568" stroke-width="1.5"/></svg>
+                </div>
             </div>
         </div>
 
-        <!-- Active Folder/Tab Heading Status Row -->
         <div class="npp-tabs">
-            <div class="npp-tab">💾 <span id="tabHeadingName">basic_test.py</span></div>
+            <div class="npp-tab">
+                <svg viewBox="0 0 16 16" fill="#FF3B30"><circle cx="8" cy="8" r="7"/></svg>
+                <span id="tabHeadingName">basic_test.py</span>
+            </div>
         </div>
 
-        <!-- Primary Text Workspace Panels Grid -->
         <div class="npp-editor-container">
-            <div class="npp-linenumbers" id="lineNumbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8</div>
+            <div class="npp-linenumbers" id="lineNumbers">1</div>
             <div class="npp-foldmargin"></div>
-            <div class="npp-textarea" id="editor" contenteditable="true" spellcheck="false" oninput="processHighlighting()">import numpy as np
-
+            <div class="npp-textarea" id="editor" contenteditable="true" spellcheck="false">import numpy as np
+# Initialize counter
 apple_count = 4
-
 if apple_count >= 5:
     print("You have enough")
-
+else:
+    print("Need more apples")
 print("Program end")</div>
+            <div class="resize-handle" id="resizableHandle"></div>
         </div>
 
-        <!-- Lower Panel Tracking Metadata Strip -->
         <div class="npp-statusbar">
-            <span id="statusFileMeta">Python  length : 115  lines : 8</span>
+            <span id="statusFileMeta">Python  length : 0  lines : 1</span>
             <div class="npp-status-right">
-                <span>Ln : 8  Col : 21</span><span>Windows (CRLF)</span><span>UTF-8</span><span>INS</span>
+                <span id="caretPos">Ln : 1  Col : 1</span>
+                <span>Windows (CRLF)</span>
+                <span>UTF-8</span>
+                <span>INS</span>
             </div>
         </div>
-
-        <!-- Resizing Trigger Corner Element Handle Layout -->
-        <div class="resize-handle" id="resizableHandle"></div>
     </div>
 
     <script>
         let targetFileName = "basic_test.py";
         let fontZoomPx = 13;
 
-        // --- Stream File Out To Client Machine ---
         function exportTextAsFile() {
             const currentCode = document.getElementById('editor').innerText;
             const blob = new Blob([currentCode], { type: "text/plain;charset=utf-8" });
             const a = document.createElement("a");
-            
             a.download = targetFileName;
             a.href = URL.createObjectURL(blob);
-Use code with caution.
-a.style.display = "none";
-document.body.appendChild(a);
-a.click();
-document.body.removeChild(a);
-}
-// Global Shortcut Command Binder
-document.addEventListener('keydown', (e) => {
-if ((e.ctrlKey || e.metaKey) && e.key === 's') {
-e.preventDefault();
-exportTextAsFile();
-}
-});
-function triggerFileInput() { document.getElementById('fileLoader').click(); }
-function clearWorkspace() {
-document.getElementById('editor').innerText = "";
-targetFileName = "new_1.txt";
-document.getElementById('tabHeadingName').innerText = targetFileName;
-document.getElementById('windowTitle').innerText = ${targetFileName} - Notepad++;
-processHighlighting();
-}
-// --- Stream In Local Script File Data Async ---
-function handleFileImport(event) {
-const file = event.target.files[0];
-if (!file) return;
-targetFileName = file.name;
-document.getElementById('tabHeadingName').innerText = targetFileName;
-document.getElementById('windowTitle').innerText = ${targetFileName} - Notepad++;
-const reader = new FileReader();
-reader.onload = function(e) {
-document.getElementById('editor').innerText = e.target.result;
-processHighlighting();
-};
-reader.readAsText(file);
-}
-function adjustZoom(direction) {
-fontZoomPx = Math.max(10, Math.min(30, fontZoomPx + direction));
-document.getElementById('editor').style.fontSize = fontZoomPx + "px";
-document.getElementById('lineNumbers').style.fontSize = fontZoomPx + "px";
-}
-// --- Realtime Client Python Syntax Token Parser Regex Engine ---
-function processHighlighting() {
-const editor = document.getElementById('editor');
-let text = editor.innerText;
-let highlighted = text
-.replace(/&/g, "&").replace(/</g, "<").replace(/>/g, ">")
-.replace(/\b(import|as|if|elif|else|for|while|def|return|class)\b/g, '$1')
-.replace(/\b(print|len|range|str|int|float|list|dict)\b/g, '$1')
-.replace(/("[^"]")|('[^']')/g, '$1')
-.replace(/\b(\d+)\b/g, '$1');
-editor.innerHTML = highlighted;
-const linesCount = text.split('\n').length;
-document.getElementById('lineNumbers').innerHTML = Array.from({length: linesCount}, (_, i) => i + 1).join('
-');
-document.getElementById('statusFileMeta').innerText = Python  length : ${text.length}  lines : ${linesCount};
-}
-// --- Absolute Coordinate Window Drag & Resize Tracking Engine ---
-const win = document.getElementById('windowContainer');
-const header = document.getElementById('windowDragHeader');
-const rHandle = document.getElementById('resizableHandle');
-let isDragging = false, isResizing = false;
-let startX, startY, startW, startH, startLeft, startTop;
-header.addEventListener('mousedown', (e) => {
-if(win.classList.contains('maximized') || e.target.tagName === 'SPAN') return;
-isDragging = true;
-startX = e.clientX; startY = e.clientY;
-startLeft = win.offsetLeft; startTop = win.offsetTop;
-document.body.style.userSelect = 'none';
-});
-rHandle.addEventListener('mousedown', (e) => {
-isResizing = true;
-startX = e.clientX; startY = e.clientY;
-startW = win.clientWidth; startH = win.clientHeight;
-document.body.style.userSelect = 'none';
-e.stopPropagation();
-});
-document.addEventListener('mousemove', (e) => {
-if (isDragging) {
-win.style.left = (startLeft + (e.clientX - startX)) + 'px';
-win.style.top = (startTop + (e.clientY - startY)) + 'px';
-} else if (isResizing) {
-win.style.width = (startW + (e.clientX - startX)) + 'px';
-win.style.height = (startH + (e.clientY - startY)) + 'px';
-}
-});
-document.addEventListener('mouseup', () => {
-isDragging = false; isResizing = false;
-document.body.style.userSelect = 'auto';
-});
-function toggleMaximize() { win.classList.toggle('maximized'); }
-window.addEventListener('DOMContentLoaded', processHighlighting);
+            a.style.display = "none";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(a.href);
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+                e.preventDefault();
+                exportTextAsFile();
+            }
+        });
+
+        function triggerFileInput(e) {
+            if (e) e.stopPropagation();
+            document.getElementById('fileLoader').click();
+        }
+
+        function clearWorkspace() {
+            document.getElementById('editor').innerText = "";
+            targetFileName = "new_1.txt";
+            document.getElementById('tabHeadingName').innerText = targetFileName;
+            document.getElementById('windowTitle').innerText = `${targetFileName} - Notepad++`;
+            processHighlighting();
+        }
+
+        function handleFileImport(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            targetFileName = file.name;
+            document.getElementById('tabHeadingName').innerText = targetFileName;
+            document.getElementById('windowTitle').innerText = `${targetFileName} - Notepad++`;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('editor').innerText = e.target.result;
+                processHighlighting();
+            };
+            reader.readAsText(file);
+            event.target.value = '';
+        }
+
+        function adjustZoom(direction) {
+            fontZoomPx = Math.max(10, Math.min(30, fontZoomPx + direction));
+            document.getElementById('editor').style.fontSize = fontZoomPx + "px";
+            document.getElementById('lineNumbers').style.fontSize = fontZoomPx + "px";
+        }
+
+        function escapeHtml(text) {
+            return text
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;");
+        }
+
+        function processHighlighting() {
+            const editor = document.getElementById('editor');
+            const rawText = editor.innerText.replace(/\r\n/g, '\n');
+
+            const linesCount = rawText.split('\n').length;
+            document.getElementById('lineNumbers').textContent = Array.from({length: linesCount}, (_, i) => i + 1).join('\n');
+            document.getElementById('statusFileMeta').innerText = `Python  length : ${rawText.length}  lines : ${linesCount}`;
+        }
+
+        const win = document.getElementById('windowContainer');
+        const header = document.getElementById('windowDragHeader');
+        const rHandle = document.getElementById('resizableHandle');
+        let isDragging = false, isResizing = false;
+        let startX, startY, startW, startH, startLeft, startTop;
+
+        header.addEventListener('mousedown', (e) => {
+            if (win.classList.contains('maximized') || e.target.closest('.npp-controls')) return;
+            isDragging = true;
+            startX = e.clientX;
+            startY = e.clientY;
+            startLeft = win.offsetLeft;
+            startTop = win.offsetTop;
+            document.body.style.userSelect = 'none';
+        });
+
+        rHandle.addEventListener('mousedown', (e) => {
+            isResizing = true;
+            startX = e.clientX;
+            startY = e.clientY;
+            startW = win.clientWidth;
+            startH = win.clientHeight;
+            document.body.style.userSelect = 'none';
+            e.stopPropagation();
+            e.preventDefault();
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (isDragging) {
+                let nextX = startLeft + (e.clientX - startX);
+                let nextY = startTop + (e.clientY - startY);
+                win.style.left = Math.max(0, Math.min(window.innerWidth - 100, nextX)) + 'px';
+                win.style.top = Math.max(0, Math.min(window.innerHeight - 50, nextY)) + 'px';
+            } else if (isResizing) {
+                win.style.width = Math.max(450, startW + (e.clientX - startX)) + 'px';
+                win.style.height = Math.max(300, startH + (e.clientY - startY)) + 'px';
+            }
+        });
+
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+            isResizing = false;
+            document.body.style.userSelect = 'auto';
+        });
+
+        function toggleMaximize(e) {
+            if (e) e.stopPropagation();
+            win.classList.toggle('maximized');
+        }
+
+        document.getElementById('editor').addEventListener('input', processHighlighting);
+
+        window.addEventListener('DOMContentLoaded', processHighlighting);
+    </script>
+</body>
+</html>
